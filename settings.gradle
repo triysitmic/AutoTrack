@@ -1,1 +1,1 @@
-include ':app', ':track'
+include ':app', ':track' , ':cost'
