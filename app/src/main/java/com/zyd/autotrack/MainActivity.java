@@ -1,29 +1,45 @@
 package com.zyd.autotrack;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
-import android.widget.Button;
-import android.widget.Toast;
 
-import com.zyd.track.Cost;
+import com.zyd.interceptor.ClickInterceptor;
+import com.zyd.interceptor.Interceptor;
 
 
-public class MainActivity extends AppCompatActivity{
+public class MainActivity extends AppCompatActivity {
 
-    private Button button;
+    MyHandler handler = new MyHandler();
 
-    @Cost
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        button = findViewById(R.id.btn);
-        button.setOnClickListener(new View.OnClickListener() {
+
+        findViewById(R.id.btn).setOnClickListener(new View.OnClickListener() {
+            @Interceptor(interceptorTime = 500)
             @Override
             public void onClick(View view) {
-                System.out.println("onclick");
+                handler.postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        Intent intent = new Intent(MainActivity.this, SecondActivity.class);
+                        startActivity(intent);
+                    }
+                }, 200);
             }
         });
     }
+
+    private static class MyHandler extends Handler {
+        @Override
+        public void handleMessage(Message msg) {
+            super.handleMessage(msg);
+        }
+    }
+
 }

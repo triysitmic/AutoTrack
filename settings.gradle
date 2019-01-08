@@ -1,1 +1,1 @@
-include ':app', ':track' , ':cost'
+include ':app', ':track', ':click_interceptor'

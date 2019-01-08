@@ -43,22 +43,25 @@ class AutoTrackPlugin extends Transform implements Plugin<Project> {
     }
 
     @Override
-    void transform(Context context, Collection<TransformInput> inputs, Collection<TransformInput> referencedInputs,
-                   TransformOutputProvider outputProvider, boolean isIncremental) throws IOException, TransformException, InterruptedException {
+    void transform(Context context, Collection<TransformInput> inputs,
+                   Collection<TransformInput> referencedInputs,
+                   TransformOutputProvider outputProvider, boolean isIncremental)
+            throws IOException, TransformException, InterruptedException {
         inputs.each { TransformInput input ->
             input.directoryInputs.each { DirectoryInput directoryInput ->
                 if (directoryInput.file.isDirectory()) {
+
                     directoryInput.file.eachFileRecurse { File file ->
                         def name = file.name
                         if (name.endsWith(".class") && !name.startsWith("R\$") &&
                                 "R.class" != name && "BuildConfig.class" != name) {
                             ClassReader cr = new ClassReader(file.bytes)
-                            ClassWriter cw = new ClassWriter(cr, ClassWriter.COMPUTE_MAXS);
-                            ClassVisitor cv = new CostClassVisitor(cw)
+                            ClassWriter cw = new ClassWriter(cr, ClassWriter.COMPUTE_MAXS)
+                            ClassVisitor cv = new ClickClassVisitor(cw)
                             cr.accept(cv, ClassReader.EXPAND_FRAMES)
                             byte[] code = cw.toByteArray()
                             FileOutputStream fos = new FileOutputStream(
-                                    file.parentFile.absolutePath + File.separator + name);
+                                    file.parentFile.absolutePath + File.separator + name)
                             fos.write(code)
                             fos.close()
                         }
@@ -82,4 +85,5 @@ class AutoTrackPlugin extends Transform implements Plugin<Project> {
             }
         }
     }
+
 }
