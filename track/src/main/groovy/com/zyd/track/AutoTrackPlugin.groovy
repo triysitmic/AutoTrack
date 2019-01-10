@@ -11,7 +11,7 @@ import org.apache.commons.codec.digest.DigestUtils
 import org.gradle.api.Plugin
 import org.gradle.api.Project
 
-class AutoTrackPlugin extends Transform implements Plugin<Project> {
+public class AutoTrackPlugin extends Transform implements Plugin<Project> {
 
     public final String TAG = "AutoTrackPlugin"
 
@@ -19,7 +19,7 @@ class AutoTrackPlugin extends Transform implements Plugin<Project> {
 
         def android = project.extensions.getByType(AppExtension)
         android.registerTransform(this)
-
+        println(TAG)
     }
 
     @Override

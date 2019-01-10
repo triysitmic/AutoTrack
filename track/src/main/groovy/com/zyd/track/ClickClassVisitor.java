@@ -7,16 +7,16 @@ import com.android.tools.r8.org.objectweb.asm.MethodVisitor;
 import com.android.tools.r8.org.objectweb.asm.Opcodes;
 import com.android.tools.r8.org.objectweb.asm.commons.AdviceAdapter;
 
-class ClickClassVisitor extends ClassVisitor {
+public class ClickClassVisitor extends ClassVisitor {
 
     public ClickClassVisitor(ClassVisitor classVisitor) {
-        super(Opcodes.ASM5, classVisitor);
+        super(Opcodes.ASM6, classVisitor);
     }
 
     @Override
     public MethodVisitor visitMethod(int access, String name, String desc, String signature, String[] exceptions) {
         MethodVisitor mv = cv.visitMethod(access, name, desc, signature, exceptions);
-        mv = new AdviceAdapter(Opcodes.ASM5, mv, access, name, desc) {
+        mv = new AdviceAdapter(Opcodes.ASM6, mv, access, name, desc) {
 
             MyAnnotationVisitor myAnnotationVisitor = null;
 
@@ -65,7 +65,7 @@ class ClickClassVisitor extends ClassVisitor {
         long time = -1;
 
         MyAnnotationVisitor(AnnotationVisitor av) {
-            super(Opcodes.ASM5, av);
+            super(Opcodes.ASM6, av);
         }
 
         @Override

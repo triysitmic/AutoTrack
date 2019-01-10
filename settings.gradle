@@ -1,1 +1,1 @@
-include ':app', ':track', ':click_interceptor'
+include ':app',':click_interceptor',':track'

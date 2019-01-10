@@ -15,6 +15,7 @@ public class ClickInterceptor {
 
     public static boolean canClick(View view, long interceptTime) {
         if (interceptTime <= 0) {
+            Log.d(TAG, "不拦截事件\t" + "设定拦截时间间隔:" + interceptTime + "ms");
             return true;
         }
 
