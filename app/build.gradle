@@ -29,5 +29,5 @@ dependencies {
 
     implementation 'com.android.support:recyclerview-v7:27.1.1'
 
-    implementation 'com.zyd.track:click_interceptor:0.1.1'
+    implementation 'com.zyd.track:click_interceptor:0.1.2'
 }

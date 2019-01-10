@@ -7,6 +7,7 @@ import com.android.tools.r8.org.objectweb.asm.ClassReader
 import com.android.tools.r8.org.objectweb.asm.ClassVisitor
 import com.android.tools.r8.org.objectweb.asm.ClassWriter
 import com.android.utils.FileUtils
+import com.zyd.track.asm.ClickClassVisitor
 import org.apache.commons.codec.digest.DigestUtils
 import org.gradle.api.Plugin
 import org.gradle.api.Project

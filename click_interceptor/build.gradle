@@ -36,7 +36,7 @@ publish {
     userOrg = rootProject.userOrg
     groupId = rootProject.groupId
     artifactId = 'click_interceptor'
-    publishVersion = '0.1.1'
+    publishVersion = '0.1.2'
     desc = 'click interceptor tools'
     website = rootProject.website
 }

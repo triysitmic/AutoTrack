@@ -10,6 +10,16 @@ public class ClickInterceptor {
     private static final String TAG = "ClickInterceptor";
     private static Map<View, Long> map;
 
+    private static long DEFAULT_INTERCEPT_TIME = 1000L;
+
+    public static long getDefaultInterceptTime() {
+        return DEFAULT_INTERCEPT_TIME;
+    }
+
+    public static void setDefaultInterceptTime(long defaultInterceptTime) {
+        DEFAULT_INTERCEPT_TIME = defaultInterceptTime;
+    }
+
     private ClickInterceptor() {
     }
 

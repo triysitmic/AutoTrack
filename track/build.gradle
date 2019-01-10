@@ -1,5 +1,6 @@
 apply plugin: 'groovy'
 apply plugin: 'com.novoda.bintray-release'
+apply plugin: 'maven'
 
 dependencies {
     //gradle sdk
@@ -20,7 +21,18 @@ publish {
     userOrg = rootProject.userOrg
     groupId = rootProject.groupId
     artifactId = 'plugin'
-    publishVersion = '0.1.2'
+    publishVersion = '0.1.3'
     desc = 'An android gradle pulgin with ASM to create codes for AOP'
     website = rootProject.website
+}
+
+
+group='com.zyd.track'
+version='1.0.0'
+uploadArchives {
+    repositories {
+        mavenDeployer {
+            repository(url: uri('../repo'))
+        }
+    }
 }
