@@ -1,1 +1,1 @@
-include ':app',':track', ':test2'
+include ':app', ':autotrack-gradle-plugin', ':test-module', ':autotrack'

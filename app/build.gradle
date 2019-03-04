@@ -1,6 +1,6 @@
 apply plugin: 'com.android.application'
-apply plugin: 'auto_track'
-
+//apply plugin: 'auto_track'
+apply plugin: 'autotrack'
 android {
     compileSdkVersion 27
     defaultConfig {
@@ -29,7 +29,8 @@ dependencies {
 
     implementation 'com.android.support:recyclerview-v7:27.1.1'
 
-    implementation 'com.zyd.track:click_interceptor:0.1.2'
+//    implementation 'com.zyd.track:click_interceptor:0.1.2'
 
-    compile project(":test2")
+    compile project(':test-module')
+    compile project(path: ':autotrack')
 }
