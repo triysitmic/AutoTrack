@@ -5,25 +5,24 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 
-import com.zyd.test2.TestActivity;
+import com.zyd.test.TestActivity;
 
 import autotrack.AutoTrack;
-import autotrack.annotations.Click;
 import autotrack.annotations.ClickAndExposure;
-import autotrack.annotations.Exposure;
+import autotrack.annotations.Page;
 
-
+@Page("main activity")
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
 
-    @Click("click")
-    public View btn1;
+    @ClickAndExposure("btn15")
+    public View btn;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        btn1 = findViewById(R.id.btn1);
-        btn1.setOnClickListener(this);
+        btn = findViewById(R.id.btn15);
+        btn.setOnClickListener(this);
         AutoTrack.track(this);
     }
 

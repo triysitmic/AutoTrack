@@ -1,29 +1,43 @@
 package autotrack;
 
 import android.util.Log;
+import android.view.View;
 
 public class Tracker {
 
-    public final static String TAG = "AutoTrack-Tracker";
+    private final static String TAG = "AutoTrack-Tracker";
 
     public static void setExposureTrack(Object target, String value) {
-        if (target == null || !(target instanceof android.view.View)) {
-            Log.d(TAG, "target field is not instant of android.view.View");
+        if (!(target instanceof View)) {
+            Log.e(TAG, "target field is not instant of android.view.View");
             return;
         }
-        final android.view.ViewTreeObserver observer =
-                ((android.view.View) target).getViewTreeObserver();
-        autotrack.CommonPreDrawListener listener = new CommonPreDrawListener(observer, value);
-        observer.addOnPreDrawListener(listener);
-        Log.d(TAG, "setExposureTrack success");
+        View view = ((android.view.View) target);
+        autotrack.CommonPreDrawListener listener = new CommonPreDrawListener(view, value);
+        view.getViewTreeObserver().addOnPreDrawListener(listener);
     }
 
     public static void setClickTrack(Object target, String value) {
-        if (target == null || !(target instanceof android.view.View)) {
-            Log.d(TAG, "target field is not instant of android.view.View");
+        if (!(target instanceof View)) {
+            Log.e(TAG, "target field is not instant of android.view.View");
             return;
         }
         ((android.view.View) target).setTag(new autotrack.CommonTag(value));
-        Log.d(TAG, "setClickTrack success");
+    }
+
+    public static void setPageTrack(String value) {
+        Reporter.reportPage(value);
+    }
+
+    public static void trackClick(Object target) {
+        if (!(target instanceof android.view.View)) {
+            return;
+        }
+        View view = (android.view.View) target;
+        Object tag = view.getTag();
+        if (!(tag instanceof autotrack.CommonTag)) {
+            return;
+        }
+        Reporter.reportClick(((CommonTag) tag).getValue());
     }
 }

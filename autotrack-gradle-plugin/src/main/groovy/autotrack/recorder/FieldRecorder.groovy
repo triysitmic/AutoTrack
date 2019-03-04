@@ -70,7 +70,7 @@ class FieldRecorder {
         return (mTypeFlag & Constant.type.TYPE_TRACK_EXPOSURE) != 0
     }
 
-    boolean shouldGenertateCode(){
+    boolean shouldGenerateCode() {
         return mTypeFlag != 0
     }
 }

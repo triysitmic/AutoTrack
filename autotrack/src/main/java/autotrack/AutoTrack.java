@@ -1,10 +1,7 @@
 package autotrack;
 
-import android.util.Log;
-
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
-import java.util.Arrays;
 
 public class AutoTrack {
 
@@ -12,7 +9,6 @@ public class AutoTrack {
 
     public static void track(Object target) {
         Class<?> cls = target.getClass();
-        Log.d(TAG, cls.toString());
         try {
             Method method = cls.getMethod("track", cls);
             if (method != null) {

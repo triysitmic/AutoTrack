@@ -1,6 +1,7 @@
 package autotrack.asm.visitor
 
 import autotrack.api.Visitor
+import autotrack.constants.Constant
 import autotrack.recorder.FieldRecorder
 import com.android.tools.r8.org.objectweb.asm.*
 
@@ -19,6 +20,17 @@ class BaseClassVisitor extends ClassVisitor {
         visitor.sr.setClassName(name)
     }
 
+
+    @Override
+    AnnotationVisitor visitAnnotation(String desc, boolean visible) {
+        if (Constant.classDescs.contains(desc)) {
+            AnnotationVisitor av = cv.visitAnnotation(desc, visible)
+            visitor.sr.addFlagByDesc(desc)
+            return new BaseClassAnnotationVisitor(av, visitor.sr)
+        }
+        return super.visitAnnotation(desc, visible)
+    }
+
     @Override
     FieldVisitor visitField(int access, String name, String desc, String signature, Object value) {
         FieldVisitor fv = cv.visitField(access, name, desc, signature, value)
@@ -28,12 +40,13 @@ class BaseClassVisitor extends ClassVisitor {
     }
 
     @Override
-    AnnotationVisitor visitAnnotation(String desc, boolean visible) {
-        return super.visitAnnotation(desc, visible)
-    }
-
-    @Override
     MethodVisitor visitMethod(int access, String name, String desc, String signature, String[] exceptions) {
+        if (((access & Opcodes.ACC_PUBLIC) != 0) && ((access & Opcodes.ACC_STATIC) == 0) &&
+                name == "onClick" && desc == "(Landroid/view/View;)V") {
+            MethodVisitor mv = cv.visitMethod(access, name, desc, signature, exceptions)
+            mv = new BaseMethodVisitor(Opcodes.ASM6, mv, access, name, desc)
+            return mv
+        }
         return super.visitMethod(access, name, desc, signature, exceptions)
     }
 

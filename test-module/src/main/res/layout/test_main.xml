@@ -5,7 +5,7 @@
     android:layout_height="match_parent"
     android:gravity="right"
     android:orientation="vertical"
-    tools:context=".TestActivity">
+    tools:context="com.zyd.test.TestActivity">
 
     <Button
         android:id="@+id/btn1"

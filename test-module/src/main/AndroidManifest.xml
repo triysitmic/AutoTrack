@@ -2,6 +2,6 @@
     package="com.zyd.test2" >
 
     <application>
-        <activity android:name=".TestActivity" />
+        <activity android:name="com.zyd.test.TestActivity" />
     </application>
 </manifest>

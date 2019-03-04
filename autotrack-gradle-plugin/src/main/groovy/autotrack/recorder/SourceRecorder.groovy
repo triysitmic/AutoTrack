@@ -1,5 +1,7 @@
 package autotrack.recorder
 
+import autotrack.constants.Constant
+
 class SourceRecorder {
 
     private String mClassName
@@ -7,6 +9,8 @@ class SourceRecorder {
     private ArrayList<FieldRecorder> fields = new ArrayList<>()
 
     private int mTypeFlag = 0
+
+    private String mValue
 
     SourceRecorder() {
     }
@@ -17,21 +21,26 @@ class SourceRecorder {
             return b
         }
         for (FieldRecorder fr : fields) {
-            b = b || fr.shouldGenertateCode()
+            b = b || fr.shouldGenerateCode()
         }
         return b
     }
 
-    @Override
-    String toString() {
-        StringBuilder sb = new StringBuilder(
-                "SourceRecorder : " + "\n" +
-                        "className : " + mClassName + "\n"
-        )
-        for (FieldRecorder fr : fields) {
-            sb.append(fr.toString())
+    void addFlagByDesc(String desc) {
+        switch (desc) {
+            case Constant.desc.ANNOTATION_PAGE:
+                addFlag(Constant.type.TYPE_TRACK_PAGE)
+                break
+            default: break
         }
-        return sb.toString()
+    }
+
+    boolean trackPage() {
+        return (mTypeFlag & Constant.type.TYPE_TRACK_PAGE) != 0
+    }
+
+    void addFlag(int flag) {
+        mTypeFlag |= flag
     }
 
     void addField(FieldRecorder recorder) {
@@ -50,12 +59,24 @@ class SourceRecorder {
         return mClassName
     }
 
-    void setDesc(String desc) {
-        mDesc = desc
+    void setValue(String value) {
+        mValue = value
     }
 
-    String getDesc() {
-        return mDesc
+    String getValue() {
+        return mValue
+    }
+
+    @Override
+    String toString() {
+        StringBuilder sb = new StringBuilder(
+                "SourceRecorder : " + "\n" +
+                        "className : " + mClassName + "\n"
+        )
+        for (FieldRecorder fr : fields) {
+            sb.append(fr.toString())
+        }
+        return sb.toString()
     }
 
 }

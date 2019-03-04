@@ -28,9 +28,19 @@ class Visitor {
     }
 
     void append(ClassVisitor cv) {
+        if (!sr.shouldGenerateCode()) {
+            return
+        }
         MethodVisitor mv = cv.visitMethod(Opcodes.ACC_PUBLIC, "track",
                 "(L" + sr.getClassName() + ";)V", null, null)
         mv.visitCode()
+
+        if (sr.trackPage()) {
+            mv.visitLdcInsn(sr.getValue())
+            mv.visitMethodInsn(Opcodes.INVOKESTATIC, "autotrack/Tracker", "setPageTrack",
+                    "(Ljava/lang/String;)V", false)
+        }
+
         List<FieldRecorder> fields = sr.getFields()
         for (FieldRecorder fr : fields) {
             if (fr.trackClick()) {
@@ -53,6 +63,6 @@ class Visitor {
     }
 
     byte[] dump() {
-        return cw.toByteArray()
+        return sr.shouldGenerateCode() ? cw.toByteArray() : null
     }
 }

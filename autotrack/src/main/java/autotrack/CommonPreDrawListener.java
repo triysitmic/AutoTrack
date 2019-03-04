@@ -1,20 +1,21 @@
 package autotrack;
 
+import android.view.View;
 import android.view.ViewTreeObserver;
 
 public class CommonPreDrawListener implements ViewTreeObserver.OnPreDrawListener {
 
-    private ViewTreeObserver observer;
+    private View view;
     private String value;
 
-    public CommonPreDrawListener(ViewTreeObserver observer, String value) {
-        this.observer = observer;
+    public CommonPreDrawListener(View view, String value) {
+        this.view = view;
         this.value = value;
     }
 
     @Override
     public boolean onPreDraw() {
-        this.observer.removeOnPreDrawListener(this);
+        view.getViewTreeObserver().removeOnPreDrawListener(this);
         Reporter.reportExposure(value);
         return false;
     }

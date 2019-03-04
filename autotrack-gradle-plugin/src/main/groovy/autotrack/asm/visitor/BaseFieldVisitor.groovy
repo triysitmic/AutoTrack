@@ -20,18 +20,17 @@ class BaseFieldVisitor extends FieldVisitor {
 
     @Override
     AnnotationVisitor visitAnnotation(String desc, boolean visible) {
-        if (Constant.descs.contains(desc)) {
+        if (Constant.fieldDescs.contains(desc)) {
             AnnotationVisitor av = fv.visitAnnotation(desc, visible)
             fr.addFlagByDesc(desc)
-            av = new BaseFieldAnnotationVisitor(av, fr)
-            return av
+            return new BaseFieldAnnotationVisitor(av, fr)
         }
         return super.visitAnnotation(desc, visible)
     }
 
     @Override
     void visitEnd() {
-        if (fr.shouldGenertateCode()) {
+        if (fr.shouldGenerateCode()) {
             sr.addField(fr)
         }
         super.visitEnd()
