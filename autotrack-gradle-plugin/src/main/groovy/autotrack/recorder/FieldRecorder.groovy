@@ -6,6 +6,8 @@ class FieldRecorder extends Recorder {
 
     private String mDesc
 
+    private HashMap<String, List<String>> mValues = new HashMap<>()
+
     FieldRecorder(String name, String desc) {
         mDesc = desc
         mName = name
@@ -33,6 +35,22 @@ class FieldRecorder extends Recorder {
         return mType != 0
     }
 
+    void addValues(String desc, List<String> values) {
+        if (desc == Constant.desc.ANNOTATION_CLICK_EXPOSURE) {
+            mValues.put(Constant.desc.ANNOTATION_CLICK, values)
+            mValues.put(Constant.desc.ANNOTATION_EXPOSURE, values)
+        }
+        mValues.put(desc, values)
+    }
+
+    List<String> getClickValues() {
+        return mValues.get(Constant.desc.ANNOTATION_CLICK)
+    }
+
+    List<String> getExposureValues() {
+        return mValues.get(Constant.desc.ANNOTATION_EXPOSURE)
+    }
+
     String getDesc() {
         return mDesc
     }
@@ -50,7 +68,7 @@ class FieldRecorder extends Recorder {
         return "FieldRecorder: \n" +
                 "name = " + mName + "\n" +
                 "desc = " + mDesc + "\n" +
-                "value = " + getValues().toString() + "\n" +
+                "value = " + mValues.toString() + "\n" +
                 "trackClick? = " + trackClick() + "\n" +
                 "trackExposure? = " + trackExposure() + "\n"
     }

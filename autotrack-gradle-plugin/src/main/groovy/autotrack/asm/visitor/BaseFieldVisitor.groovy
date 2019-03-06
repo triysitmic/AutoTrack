@@ -23,7 +23,7 @@ class BaseFieldVisitor extends FieldVisitor {
         if (Constant.fieldDescs.contains(desc)) {
             AnnotationVisitor av = fv.visitAnnotation(desc, visible)
             fr.addTypeByDesc(desc)
-            return new FieldAnnotationVisitor(av, fr)
+            return new FieldAnnotationVisitor(av, fr, desc)
         }
         return super.visitAnnotation(desc, visible)
     }

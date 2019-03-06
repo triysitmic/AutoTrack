@@ -7,16 +7,25 @@ import com.android.tools.r8.org.objectweb.asm.Opcodes
 class FieldAnnotationVisitor extends AnnotationVisitor {
 
     private FieldRecorder fr
+    private String desc
+    private List<String> values = new ArrayList<>()
 
-    FieldAnnotationVisitor(AnnotationVisitor av, FieldRecorder fr) {
+    FieldAnnotationVisitor(AnnotationVisitor av, FieldRecorder fr, String desc) {
         super(Opcodes.ASM6, av)
         this.fr = fr
+        this.desc = desc
     }
 
     @Override
     AnnotationVisitor visitArray(String name) {
         AnnotationVisitor visitor = av.visitArray(name)
         return new AV(visitor)
+    }
+
+    @Override
+    void visitEnd() {
+        super.visitEnd()
+        fr.addValues(desc, values)
     }
 
     class AV extends AnnotationVisitor {
@@ -28,7 +37,7 @@ class FieldAnnotationVisitor extends AnnotationVisitor {
         @Override
         void visit(String name, Object value) {
             super.visit(name, value)
-            fr.addValue(value)
+            values.add(value)
         }
     }
 }

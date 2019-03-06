@@ -71,45 +71,55 @@ class Visitor {
         mv.visitCode()
 
         List<FieldRecorder> fields = sr.getFields()
+
+        //初始值为2，1给param留着
+        int position = 2
         for (int i = 0; i < fields.size(); i++) {
-            int position = i + 2
             FieldRecorder fr = fields.get(i)
-
-            //init ArrayList
-            mv.visitTypeInsn(Opcodes.NEW, "java/util/ArrayList")
-            mv.visitInsn(Opcodes.DUP)
-            mv.visitMethodInsn(Opcodes.INVOKESPECIAL, "java/util/ArrayList",
-                    "<init>", "()V", false)
-            mv.visitVarInsn(Opcodes.ASTORE, position)
-
-            //add items
-            for (String value : fr.getValues()) {
-                mv.visitVarInsn(Opcodes.ALOAD, 2)
-                mv.visitLdcInsn(value)
-                mv.visitMethodInsn(Opcodes.INVOKEINTERFACE, "java/util/List",
-                        "add", "(Ljava/lang/Object;)Z", true)
-                mv.visitInsn(Opcodes.POP)
-            }
 
             //track
             if (fr.trackClick()) {
+                initArrayList(mv, fr.getClickValues(), position)
+
                 mv.visitVarInsn(Opcodes.ALOAD, 1)
                 mv.visitFieldInsn(Opcodes.GETFIELD, sr.getName(), fr.getName(), fr.getDesc())
                 mv.visitVarInsn(Opcodes.ALOAD, position)
                 mv.visitMethodInsn(Opcodes.INVOKESTATIC, "autotrack/Tracker", "setClickTrack",
                         "(Ljava/lang/Object;Ljava/util/List;)V", false)
+                position++
             }
             if (fr.trackExposure()) {
+                initArrayList(mv, fr.getExposureValues(), position)
+
                 mv.visitVarInsn(Opcodes.ALOAD, 1)
                 mv.visitFieldInsn(Opcodes.GETFIELD, sr.getName(), fr.getName(), fr.getDesc())
                 mv.visitVarInsn(Opcodes.ALOAD, position)
                 mv.visitMethodInsn(Opcodes.INVOKESTATIC, "autotrack/Tracker", "setExposureTrack",
                         "(Ljava/lang/Object;Ljava/util/List;)V", false)
+                position++
             }
         }
 
         mv.visitInsn(Opcodes.RETURN)
         mv.visitEnd()
+    }
+
+    private static void initArrayList(MethodVisitor mv, List<String> values, position) {
+        //init ArrayList
+        mv.visitTypeInsn(Opcodes.NEW, "java/util/ArrayList")
+        mv.visitInsn(Opcodes.DUP)
+        mv.visitMethodInsn(Opcodes.INVOKESPECIAL, "java/util/ArrayList",
+                "<init>", "()V", false)
+        mv.visitVarInsn(Opcodes.ASTORE, position)
+
+        //add items
+        for (String value : values) {
+            mv.visitVarInsn(Opcodes.ALOAD, position)
+            mv.visitLdcInsn(value)
+            mv.visitMethodInsn(Opcodes.INVOKEINTERFACE, "java/util/List",
+                    "add", "(Ljava/lang/Object;)Z", true)
+            mv.visitInsn(Opcodes.POP)
+        }
     }
 
     byte[] dump() {

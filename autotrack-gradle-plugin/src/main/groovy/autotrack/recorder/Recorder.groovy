@@ -7,26 +7,16 @@ abstract class Recorder {
 
     protected int mType = 0
 
-    private List<String> mValues = new ArrayList<>()
-
     void addType(int flag) {
         mType |= flag
     }
 
-    public void setName(String name) {
+    void setName(String name) {
         mName = name
     }
 
     String getName() {
         return mName
-    }
-
-    void addValue(String value) {
-        mValues.add(value)
-    }
-
-    List<String> getValues() {
-        return mValues
     }
 
     abstract boolean shouldGenerateCode()

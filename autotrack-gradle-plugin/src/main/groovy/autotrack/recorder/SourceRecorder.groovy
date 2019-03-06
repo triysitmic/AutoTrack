@@ -6,7 +6,17 @@ class SourceRecorder extends Recorder {
 
     private ArrayList<FieldRecorder> fields = new ArrayList<>()
 
+    private List<String> mValues = new ArrayList<>()
+
     SourceRecorder() {
+    }
+
+    void addValue(String value) {
+        mValues.add(value)
+    }
+
+    List<String> getValues() {
+        return mValues
     }
 
     @Override
