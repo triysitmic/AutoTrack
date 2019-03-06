@@ -1,5 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<resources>
-    <dimen name="comment_tags_max_height">150dp</dimen>
-    <dimen name="comment_tags_space">10dp</dimen>
-</resources>

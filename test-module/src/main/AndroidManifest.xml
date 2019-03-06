@@ -1,7 +1,0 @@
-<manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.zyd.test2" >
-
-    <application>
-        <activity android:name="com.zyd.test.TestActivity" />
-    </application>
-</manifest>
