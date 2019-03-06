@@ -11,10 +11,10 @@ import autotrack.AutoTrack;
 import autotrack.annotations.ClickAndExposure;
 import autotrack.annotations.Page;
 
-@Page("main activity")
+@Page({"main activity","mainmainmain"})
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
 
-    @ClickAndExposure("btn15")
+    @ClickAndExposure({"btn15","123"})
     public View btn;
 
     @Override

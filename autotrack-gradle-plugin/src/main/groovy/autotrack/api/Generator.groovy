@@ -65,6 +65,32 @@ class Generator implements Opcodes {
         mv.visitCode()
 
         List<FieldRecorder> fields = sr.getFields()
+        for (int i = 0; i < fields.size(); i++) {
+            FieldRecorder fr = fields.get(i)
+            String name = fr.getName()
+            String desc = fr.getDesc()
+
+            mv.visitTypeInsn(NEW, "java/util/ArrayList")
+            mv.visitInsn(DUP)
+            mv.visitMethodInsn(INVOKESPECIAL, "java/util/ArrayList", "<init>", "()V", false)
+            mv.visitVarInsn(ASTORE, i + 1)
+
+
+            Label l1 = new Label()
+            mv.visitLabel(l1)
+            mv.visitLineNumber(18, l1)
+            mv.visitVarInsn(ALOAD, 1)
+            mv.visitLdcInsn("123")
+            mv.visitMethodInsn(INVOKEINTERFACE, "java/util/List", "add", "(Ljava/lang/Object;)Z", true)
+            mv.visitInsn(POP)
+            Label l2 = new Label()
+            mv.visitLabel(l2)
+            mv.visitLineNumber(19, l2)
+            mv.visitVarInsn(ALOAD, 1)
+            mv.visitMethodInsn(INVOKESTATIC, "part4/TT", "sss", "(Ljava/util/List;)V", false)
+
+
+        }
         for (FieldRecorder fr : fields) {
             if (fr.trackClick()) {
                 mv.visitVarInsn(ALOAD, 1)

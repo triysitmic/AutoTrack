@@ -1,14 +1,22 @@
 package autotrack;
 
-public class CommonTag {
+import java.util.List;
 
-    private String mValue;
+import autotrack.impl.Tagged;
 
-    public CommonTag(String value) {
-        mValue = value;
+/**
+ * @author zhengyanda
+ */
+public class CommonTag implements Tagged {
+
+    private List<String> mValues;
+
+    public CommonTag(List<String> values) {
+        mValues = values;
     }
 
-    public String getValue() {
-        return mValue;
+    @Override
+    public List<String> getTags() {
+        return mValues;
     }
 }

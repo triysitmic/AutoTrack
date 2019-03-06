@@ -6,6 +6,9 @@ import android.view.View;
 import java.util.Map;
 import java.util.WeakHashMap;
 
+/**
+ * @author zhengyanda
+ */
 public class ClickInterceptor {
     private static final String TAG = "ClickInterceptor";
     private static Map<View, Long> map;

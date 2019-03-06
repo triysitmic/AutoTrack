@@ -2,45 +2,37 @@ package autotrack.recorder
 
 import autotrack.constants.Constant
 
-class SourceRecorder {
-
-    private String mClassName
+class SourceRecorder extends Recorder {
 
     private ArrayList<FieldRecorder> fields = new ArrayList<>()
-
-    private int mTypeFlag = 0
-
-    private String mValue
 
     SourceRecorder() {
     }
 
+    @Override
     boolean shouldGenerateCode() {
-        boolean b = mTypeFlag != 0
+        boolean flag = mType != 0
         if (fields == null || fields.size() == 0) {
-            return b
+            return flag
         }
         for (FieldRecorder fr : fields) {
-            b = b || fr.shouldGenerateCode()
+            flag = flag || fr.shouldGenerateCode()
         }
-        return b
+        return flag
     }
 
-    void addFlagByDesc(String desc) {
+    @Override
+    void addTypeByDesc(String desc) {
         switch (desc) {
             case Constant.desc.ANNOTATION_PAGE:
-                addFlag(Constant.type.TYPE_TRACK_PAGE)
+                addType(Constant.type.TYPE_TRACK_PAGE)
                 break
             default: break
         }
     }
 
     boolean trackPage() {
-        return (mTypeFlag & Constant.type.TYPE_TRACK_PAGE) != 0
-    }
-
-    void addFlag(int flag) {
-        mTypeFlag |= flag
+        return (mType & Constant.type.TYPE_TRACK_PAGE) != 0
     }
 
     void addField(FieldRecorder recorder) {
@@ -51,27 +43,12 @@ class SourceRecorder {
         return fields
     }
 
-    void setClassName(String className) {
-        mClassName = className
-    }
-
-    String getClassName() {
-        return mClassName
-    }
-
-    void setValue(String value) {
-        mValue = value
-    }
-
-    String getValue() {
-        return mValue
-    }
-
     @Override
     String toString() {
         StringBuilder sb = new StringBuilder(
                 "SourceRecorder : " + "\n" +
-                        "className : " + mClassName + "\n"
+                        "className : " + mName + "\n" +
+                        "mValues : " + getValues().toString() + "\n"
         )
         for (FieldRecorder fr : fields) {
             sb.append(fr.toString())

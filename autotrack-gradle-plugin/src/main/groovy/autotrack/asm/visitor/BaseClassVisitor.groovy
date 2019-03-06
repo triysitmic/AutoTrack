@@ -17,7 +17,7 @@ class BaseClassVisitor extends ClassVisitor {
     @Override
     void visit(int version, int access, String name, String signature, String superName, String[] interfaces) {
         super.visit(version, access, name, signature, superName, interfaces)
-        visitor.sr.setClassName(name)
+        visitor.sr.setName(name)
     }
 
 
@@ -25,8 +25,8 @@ class BaseClassVisitor extends ClassVisitor {
     AnnotationVisitor visitAnnotation(String desc, boolean visible) {
         if (Constant.classDescs.contains(desc)) {
             AnnotationVisitor av = cv.visitAnnotation(desc, visible)
-            visitor.sr.addFlagByDesc(desc)
-            return new BaseClassAnnotationVisitor(av, visitor.sr)
+            visitor.sr.addTypeByDesc(desc)
+            return new ClassAnnotationVisitor(av, visitor.sr)
         }
         return super.visitAnnotation(desc, visible)
     }

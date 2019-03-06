@@ -3,6 +3,9 @@ package autotrack;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 
+/**
+ * @author zhengyanda
+ */
 public class AutoTrack {
 
     private final static String TAG = "AutoTrack-CoreAPI";
@@ -10,9 +13,14 @@ public class AutoTrack {
     public static void track(Object target) {
         Class<?> cls = target.getClass();
         try {
-            Method method = cls.getMethod("track", cls);
-            if (method != null) {
-                method.invoke(target, target);
+            Method trackPage = cls.getMethod("trackPage");
+            if (trackPage != null) {
+                trackPage.invoke(target);
+            }
+
+            Method trackView = cls.getMethod("trackView", cls);
+            if (trackView != null) {
+                trackView.invoke(target, target);
             }
         } catch (NoSuchMethodException e) {
             e.printStackTrace();
