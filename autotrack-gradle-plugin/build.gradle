@@ -27,8 +27,8 @@ publish {
 }
 
 
-group='autotrack'
-version='1.0.0'
+group = 'autotrack'
+version = '1.0.0'
 uploadArchives {
     repositories {
         mavenDeployer {

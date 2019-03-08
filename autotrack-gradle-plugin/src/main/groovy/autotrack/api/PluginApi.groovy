@@ -1,5 +1,6 @@
 package autotrack.api
 
+import autotrack.plugin.AutoTrackExtension
 import org.apache.commons.codec.digest.DigestUtils
 import org.apache.commons.compress.utils.IOUtils
 
@@ -9,6 +10,8 @@ import java.util.jar.JarOutputStream
 import java.util.zip.ZipEntry
 
 class PluginApi {
+
+    private AutoTrackExtension mExtension
 
     private static class Holder {
         static PluginApi instance = new PluginApi()
@@ -71,5 +74,29 @@ class PluginApi {
         jarOutputStream.close()
         file.close()
         return outputJar
+    }
+
+    void initExtension(AutoTrackExtension extension) {
+        mExtension = extension
+    }
+
+    boolean isTrackClick() {
+        return mExtension.trackClick
+    }
+
+    boolean isTrackExposure() {
+        return mExtension.trackExposure
+    }
+
+    boolean isTrackPage() {
+        return mExtension.trackPage
+    }
+
+    boolean isClickIntercept() {
+        return mExtension.clickIntercept
+    }
+
+    long getClickTimeCycle() {
+        return mExtension.clickTimeCycle
     }
 }

@@ -17,7 +17,11 @@ class Constant {
         classDescs.add(desc.ANNOTATION_PAGE)
     }
 
-    public final static String POSTFIX = "_AutoTrack"
+    //extension name
+    public final static String EXTENSION_NAME = "autotrackExt"
+
+    //默认的点击事件拦截周期
+    public final static long DEFAUT_CLICK_CYCLE = 1500
 
     static class type {
         public final static int TYPE_TRACK_CLICK = 0x000001
@@ -34,6 +38,6 @@ class Constant {
                 "L" + ANNOTATION_PACKAGE + "ClickAndExposure;"
         public final static String ANNOTATION_EXPOSURE = "L" + ANNOTATION_PACKAGE + "" + "Exposure;"
         public final static String ANNOTATION_PAGE = "L" + ANNOTATION_PACKAGE + "Page;"
-        public final static String ANNOTATION_INTERCEPT = "L" + ANNOTATION_PACKAGE + "Intercept"
+        public final static String ANNOTATION_INTERCEPT = "L" + ANNOTATION_PACKAGE + "Intercept;"
     }
 }

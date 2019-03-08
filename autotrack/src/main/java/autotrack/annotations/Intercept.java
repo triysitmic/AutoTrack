@@ -11,5 +11,5 @@ import java.lang.annotation.Target;
 @Target(ElementType.METHOD)
 @Retention(RetentionPolicy.CLASS)
 public @interface Intercept {
-    long time();
+    long time() default 500L;
 }

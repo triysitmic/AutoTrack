@@ -5,6 +5,7 @@ import com.android.build.api.transform.*
 import com.android.build.gradle.internal.pipeline.TransformManager
 import com.android.utils.FileUtils
 import org.apache.commons.codec.digest.DigestUtils
+import org.gradle.api.Project
 
 class AutoTrackTransform extends Transform {
     public final static String TAG = "AutoTrackPlugin"

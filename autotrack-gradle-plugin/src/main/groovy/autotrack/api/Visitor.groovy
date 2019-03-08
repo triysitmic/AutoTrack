@@ -41,7 +41,7 @@ class Visitor {
         MethodVisitor mv = cv.visitMethod(Opcodes.ACC_PUBLIC, "trackPage",
                 "()V", null, null)
         mv.visitCode()
-        if (sr.trackPage()) {
+        if (PluginApi.getInstance().trackPage && sr.trackPage()) {
             List<String> values = sr.getValues()
 
             mv.visitTypeInsn(Opcodes.NEW, "java/util/ArrayList")
@@ -78,7 +78,7 @@ class Visitor {
             FieldRecorder fr = fields.get(i)
 
             //track
-            if (fr.trackClick()) {
+            if (PluginApi.getInstance().trackClick && fr.trackClick()) {
                 initArrayList(mv, fr.getClickValues(), position)
 
                 mv.visitVarInsn(Opcodes.ALOAD, 1)
@@ -88,7 +88,7 @@ class Visitor {
                         "(Ljava/lang/Object;Ljava/util/List;)V", false)
                 position++
             }
-            if (fr.trackExposure()) {
+            if (PluginApi.getInstance().trackExposure && fr.trackExposure()) {
                 initArrayList(mv, fr.getExposureValues(), position)
 
                 mv.visitVarInsn(Opcodes.ALOAD, 1)

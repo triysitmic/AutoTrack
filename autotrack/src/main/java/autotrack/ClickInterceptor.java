@@ -10,7 +10,7 @@ import java.util.WeakHashMap;
  * @author zhengyanda
  */
 public class ClickInterceptor {
-    private static final String TAG = "ClickInterceptor";
+    private static final String TAG = "AutoTrack-Intercept";
     private static Map<View, Long> map;
 
     private ClickInterceptor() {

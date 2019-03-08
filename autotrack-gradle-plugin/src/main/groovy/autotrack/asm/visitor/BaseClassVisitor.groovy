@@ -41,6 +41,7 @@ class BaseClassVisitor extends ClassVisitor {
 
     @Override
     MethodVisitor visitMethod(int access, String name, String desc, String signature, String[] exceptions) {
+        //inject method: public void onClick(View view)
         if (((access & Opcodes.ACC_PUBLIC) != 0) && ((access & Opcodes.ACC_STATIC) == 0) &&
                 name == "onClick" && desc == "(Landroid/view/View;)V") {
             MethodVisitor mv = cv.visitMethod(access, name, desc, signature, exceptions)
