@@ -67,13 +67,12 @@ class Visitor {
 
     void appendField(ClassVisitor cv) {
         MethodVisitor mv = cv.visitMethod(Opcodes.ACC_PUBLIC, "trackView",
-                "(L" + sr.getName() + ";)V", null, null)
+                "()V", null, null)
         mv.visitCode()
 
         List<FieldRecorder> fields = sr.getFields()
 
-        //初始值为2，1给param留着
-        int position = 2
+        int position = 1
         for (int i = 0; i < fields.size(); i++) {
             FieldRecorder fr = fields.get(i)
 
@@ -81,7 +80,7 @@ class Visitor {
             if (PluginApi.getInstance().trackClick && fr.trackClick()) {
                 initArrayList(mv, fr.getClickValues(), position)
 
-                mv.visitVarInsn(Opcodes.ALOAD, 1)
+                mv.visitVarInsn(Opcodes.ALOAD, 0)
                 mv.visitFieldInsn(Opcodes.GETFIELD, sr.getName(), fr.getName(), fr.getDesc())
                 mv.visitVarInsn(Opcodes.ALOAD, position)
                 mv.visitMethodInsn(Opcodes.INVOKESTATIC, "autotrack/Tracker", "setClickTrack",
@@ -91,7 +90,7 @@ class Visitor {
             if (PluginApi.getInstance().trackExposure && fr.trackExposure()) {
                 initArrayList(mv, fr.getExposureValues(), position)
 
-                mv.visitVarInsn(Opcodes.ALOAD, 1)
+                mv.visitVarInsn(Opcodes.ALOAD, 0)
                 mv.visitFieldInsn(Opcodes.GETFIELD, sr.getName(), fr.getName(), fr.getDesc())
                 mv.visitVarInsn(Opcodes.ALOAD, position)
                 mv.visitMethodInsn(Opcodes.INVOKESTATIC, "autotrack/Tracker", "setExposureTrack",

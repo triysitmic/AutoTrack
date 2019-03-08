@@ -18,9 +18,9 @@ public class AutoTrack {
                 trackPage.invoke(target);
             }
 
-            Method trackView = cls.getMethod("trackView", cls);
+            Method trackView = cls.getMethod("trackView");
             if (trackView != null) {
-                trackView.invoke(target, target);
+                trackView.invoke(target);
             }
         } catch (NoSuchMethodException e) {
             e.printStackTrace();

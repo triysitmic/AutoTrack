@@ -9,11 +9,11 @@ import java.util.WeakHashMap;
 /**
  * @author zhengyanda
  */
-public class ClickInterceptor {
-    private static final String TAG = "AutoTrack-Intercept";
+public class Interceptor {
+    private static final String TAG = "AutoTrack-Interceptor";
     private static Map<View, Long> map;
 
-    private ClickInterceptor() {
+    private Interceptor() {
     }
 
     public static boolean canClick(View view, long interceptTime) {

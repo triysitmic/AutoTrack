@@ -48,7 +48,7 @@ class BaseMethodVisitor extends AdviceAdapter {
     private static void injectClickInterceptCode(MethodVisitor mv, long timeCycle) {
         mv.visitVarInsn(ALOAD, 1)
         mv.visitLdcInsn(timeCycle)
-        mv.visitMethodInsn(INVOKESTATIC, "autotrack/ClickInterceptor",
+        mv.visitMethodInsn(INVOKESTATIC, "autotrack/Interceptor",
                 "canClick", "(Landroid/view/View;J)Z", false)
         Label label = new Label()
         mv.visitJumpInsn(IFNE, label)
