@@ -17,8 +17,10 @@ public class Interceptor {
     }
 
     public static boolean canClick(View view, long interceptTime) {
+        String viewMsg = view.getClass().getName();
+
         if (interceptTime <= 0) {
-            Log.d(TAG, "不拦截事件\t" + "设定拦截时间间隔:" + interceptTime + "ms");
+            log(false, interceptTime, 0, viewMsg);
             return true;
         }
 
@@ -31,18 +33,30 @@ public class Interceptor {
 
         if (lastClickTime == null) {
             map.put(view, current);
-            Log.d(TAG, "首次点击,不拦截");
+            log(viewMsg);
             return true;
         } else if (current >= lastClickTime + interceptTime) {
             map.put(view, current);
-            Log.d(TAG, "不拦截事件\t" + "设定拦截时间间隔:" + interceptTime + "ms" +
-                    "\t距上次点击间隔:" + (current - lastClickTime) + "ms");
+            log(false, interceptTime, (current - lastClickTime), viewMsg);
             return true;
         } else {
-            Log.d(TAG, "拦截事件\t" + "设定拦截时间间隔:" + interceptTime + "ms" +
-                    "\t距上次点击间隔:" + (current - lastClickTime) + "ms");
+            log(true, interceptTime, (current - lastClickTime), viewMsg);
             return false;
         }
+    }
+
+    private static void log(String viewMsg) {
+        String msg = "\n首次点击,不拦截" +
+                "\n被点击View信息 : " + viewMsg;
+        Log.d(TAG, msg);
+    }
+
+    private static void log(boolean intercept, long presetTime, long period, String viewMsg) {
+        String msg = (intercept ? "\n拦截点击事件" : "\n不拦截点击事件") +
+                "\n被点击View信息 : " + viewMsg +
+                "\n距上次点击间隔 : " + period + "ms" +
+                "\n设定点击周期 : " + presetTime + "ms";
+        Log.d(TAG, msg);
     }
 
     private static long currentTime() {

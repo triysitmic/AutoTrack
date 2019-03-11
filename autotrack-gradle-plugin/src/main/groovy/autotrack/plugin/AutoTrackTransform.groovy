@@ -1,5 +1,6 @@
 package autotrack.plugin
 
+import autotrack.api.Monitor
 import autotrack.api.PluginApi
 import com.android.build.api.transform.*
 import com.android.build.gradle.internal.pipeline.TransformManager
@@ -36,6 +37,9 @@ class AutoTrackTransform extends Transform {
                    TransformOutputProvider outputProvider, boolean isIncremental)
             throws IOException, TransformException, InterruptedException {
 
+        Monitor.instance.outputConfigInfo()
+        Monitor.instance.startTiming()
+
         inputs.each { TransformInput input ->
 
             //inject class file
@@ -66,5 +70,6 @@ class AutoTrackTransform extends Transform {
                 FileUtils.copyFile(newFile, dest)
             }
         }
+        Monitor.instance.stopTiming()
     }
 }

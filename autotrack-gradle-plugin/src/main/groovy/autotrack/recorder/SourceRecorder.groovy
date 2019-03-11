@@ -8,6 +8,8 @@ class SourceRecorder extends Recorder {
 
     private List<String> mValues = new ArrayList<>()
 
+    private boolean hasInjectMethod
+
     SourceRecorder() {
     }
 
@@ -21,7 +23,7 @@ class SourceRecorder extends Recorder {
 
     @Override
     boolean shouldGenerateCode() {
-        boolean flag = mType != 0
+        boolean flag = (mType != 0) || hasInjectMethod
         if (fields == null || fields.size() == 0) {
             return flag
         }
@@ -39,6 +41,13 @@ class SourceRecorder extends Recorder {
                 break
             default: break
         }
+    }
+
+    void setInjectMethod() {
+        if (hasInjectMethod) {
+            return
+        }
+        hasInjectMethod = true
     }
 
     boolean trackPage() {

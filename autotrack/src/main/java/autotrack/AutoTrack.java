@@ -3,6 +3,8 @@ package autotrack;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 
+import autotrack.impl.IReport;
+
 /**
  * @author zhengyanda
  */

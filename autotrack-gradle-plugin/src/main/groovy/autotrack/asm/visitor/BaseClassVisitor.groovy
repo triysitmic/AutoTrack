@@ -45,7 +45,7 @@ class BaseClassVisitor extends ClassVisitor {
         if (((access & Opcodes.ACC_PUBLIC) != 0) && ((access & Opcodes.ACC_STATIC) == 0) &&
                 name == "onClick" && desc == "(Landroid/view/View;)V") {
             MethodVisitor mv = cv.visitMethod(access, name, desc, signature, exceptions)
-            mv = new BaseMethodVisitor(Opcodes.ASM6, mv, access, name, desc)
+            mv = new BaseMethodVisitor(Opcodes.ASM6, mv, access, name, desc, visitor.sr)
             return mv
         }
         return super.visitMethod(access, name, desc, signature, exceptions)

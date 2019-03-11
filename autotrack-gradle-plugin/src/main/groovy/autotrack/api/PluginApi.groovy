@@ -11,7 +11,7 @@ import java.util.zip.ZipEntry
 
 class PluginApi {
 
-    private AutoTrackExtension mExtension
+    AutoTrackExtension mExtension
 
     private static class Holder {
         static PluginApi instance = new PluginApi()

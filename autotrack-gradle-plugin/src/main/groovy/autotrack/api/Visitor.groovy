@@ -31,8 +31,6 @@ class Visitor {
         if (!sr.shouldGenerateCode()) {
             return
         }
-        println sr.toString()
-
         appendClass(cv)
         appendField(cv)
     }
@@ -72,6 +70,7 @@ class Visitor {
 
         List<FieldRecorder> fields = sr.getFields()
 
+        //jvm 函数栈特性 0为this指针 所以新的var从1开始计数
         int position = 1
         for (int i = 0; i < fields.size(); i++) {
             FieldRecorder fr = fields.get(i)
@@ -122,6 +121,10 @@ class Visitor {
     }
 
     byte[] dump() {
-        return sr.shouldGenerateCode() ? cw.toByteArray() : null
+        if (sr.shouldGenerateCode()) {
+            Monitor.instance.outputInjectClassName(sr.name)
+            return cw.toByteArray()
+        }
+        return null
     }
 }

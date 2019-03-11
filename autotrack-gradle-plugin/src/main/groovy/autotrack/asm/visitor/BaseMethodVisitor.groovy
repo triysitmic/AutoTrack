@@ -2,6 +2,7 @@ package autotrack.asm.visitor
 
 import autotrack.api.PluginApi
 import autotrack.constants.Constant
+import autotrack.recorder.SourceRecorder
 import com.android.tools.r8.org.objectweb.asm.AnnotationVisitor
 import com.android.tools.r8.org.objectweb.asm.Label
 import com.android.tools.r8.org.objectweb.asm.MethodVisitor
@@ -11,9 +12,12 @@ import com.android.tools.r8.org.objectweb.asm.commons.AdviceAdapter
 class BaseMethodVisitor extends AdviceAdapter {
 
     private MethodAV mav
+    private SourceRecorder sr
 
-    protected BaseMethodVisitor(int api, MethodVisitor mv, int access, String name, String desc) {
+    protected BaseMethodVisitor(int api, MethodVisitor mv, int access, String name, String desc,
+                                SourceRecorder sr) {
         super(api, mv, access, name, desc)
+        this.sr = sr
     }
 
     @Override
@@ -30,6 +34,7 @@ class BaseMethodVisitor extends AdviceAdapter {
 
         //inject clickIntercept
         if (PluginApi.getInstance().clickIntercept) {
+            sr.setInjectMethod()
             if (mav == null) {
                 injectClickInterceptCode(mv, PluginApi.getInstance().clickTimeCycle)
             } else {
@@ -39,6 +44,7 @@ class BaseMethodVisitor extends AdviceAdapter {
 
         //inject click track
         if (PluginApi.getInstance().trackClick) {
+            sr.setInjectMethod()
             mv.visitVarInsn(ALOAD, 1)
             mv.visitMethodInsn(INVOKESTATIC, "autotrack/Tracker", "trackClick",
                     "(Ljava/lang/Object;)V", false)

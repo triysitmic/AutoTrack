@@ -21,7 +21,7 @@ public class CommonPreDrawListener implements ViewTreeObserver.OnPreDrawListener
     @Override
     public boolean onPreDraw() {
         view.getViewTreeObserver().removeOnPreDrawListener(this);
-        Reporter.reportExposure(values);
+        Reporter.getInstance().reportExposure(values);
         return false;
     }
 }

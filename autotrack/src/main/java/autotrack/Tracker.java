@@ -41,11 +41,11 @@ public class Tracker {
         if (!(tag instanceof autotrack.impl.Tagged)) {
             return;
         }
-        Reporter.reportClick(((Tagged) tag).getTags());
+        Reporter.getInstance().reportClick(((Tagged) tag).getTags());
     }
 
     public static void setPageTrack(List<String> values) {
-        Reporter.reportPage(values);
+        Reporter.getInstance().reportPage(values);
     }
 
 }
